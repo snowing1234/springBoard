@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<!--  예시  
+	<select id="selectNow" resultType="String">
+        SELECT NOW()
+    </select> -->
+  <select id="isManager" resultType="String" >
+    SELECT * FROM administrator
+          WHERE member_id=#{id} 
+  </select>
+    
+  <insert id="insert" parameterType="com.tstory.joalog.member.dao.Member">
+    INSERT INTO member (id, pw, nickname) VALUES
+          (#{id}, #{pw}, #{nickName})
+  </insert>
+  
+  <select id="getMemeberInfo" resultType="com.tstory.joalog.member.dao.Member">
+    SELECT * FROM member
+          WHERE id=#{id}
+  </select>
+  
+  <update id="updatePW"  parameterType="com.tstory.joalog.member.dao.Member">
+      UPDATE member SET
+        pw=#{pw}
+      WHERE id=#{id}
+  </update>
+  
+  <delete id="delete">
+    DELETE FROM member
+          WHERE id=#{id} 
+  </delete>
+  
+  <select id="findNick" resultType="com.tstory.joalog.member.dao.Member" >
+    SELECT * FROM member
+          WHERE nickname=#{nickname}
+  </select>
+  
+</mapper>

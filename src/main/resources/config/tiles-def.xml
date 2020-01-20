@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
+ 
+ <!--  Tiles 대신 사용 할 수 있는 것 
+ - vue.js
+ - react
+ - handlebarjs
+ -->
+ 
+ 
+ 
+<tiles-definitions>
+ 
+    <!-- (1) 레이아웃을 적용 -->    
+    <definition name="template" template="/WEB-INF/views/basic/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/basic/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/basic/menu.jsp" />        
+        <put-attribute name="footer" value="/WEB-INF/views/basic/footer.jsp" />
+    </definition>
+ 
+    <definition name="*.basic" extends="template">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+ 
+     <definition name="*/*.basic" extends="template">
+         <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+     </definition>
+    
+    <definition name="*/*/*.basic" extends="template">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>
+    
+    <!-- (2) 레이아웃 미적용-->
+    <definition name="nonTemplate" template="/WEB-INF/views/basic/nonTemplate.jsp">      
+        <put-attribute name="footer" value="/WEB-INF/views/basic/footer.jsp" />
+    </definition>
+    
+     <definition name="*.page" extends="nonTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+ 
+     <definition name="*/*.page" extends="nonTemplate">
+         <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+     </definition>
+    
+    <definition name="*/*/*.page" extends="nonTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>    
+ 
+    
+</tiles-definitions>

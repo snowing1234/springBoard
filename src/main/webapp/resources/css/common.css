@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+.invalid-feedback {
+	display : block;
+}
+
+.nav-nick {
+	display:block;
+	padding:0.5rem;
+	color: white;
+  font-weight: bold;
+}

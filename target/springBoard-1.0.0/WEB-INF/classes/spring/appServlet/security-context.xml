@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  View 자원과 관련된 설정  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+
+  <!--  secured method -->
+  <security:global-method-security secured-annotations="disabled"/>
+  
+  <!--  provide -->
+  <security:authentication-manager>
+      <security:authentication-provider ref="userAuthProvider" />
+  </security:authentication-manager>
+  
+  <bean id="loginSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+    <property name="defaultTargetUrl" value="/springBoard/index.jsp"/>
+   <!--   <property name="alwaysUserDefaultTargetUrl" value="true"></property>-->
+  </bean>
+  
+  <bean id="loginFailureHandler"  class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    <property name="defaultFailureUrl" value="/springBoard/member/login.do"/>
+  </bean>
+  
+  <bean id="userAuthService" class="com.tstory.joalog.member.security.UserAuthService"/>
+  <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+  
+  <bean id="userAuthProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <!-- <property name="userDetailService" value="userAuthService"/> -->
+    <property name="passwordEncoder" value="passwordEncoder"/>
+    <property name="userDetailsService" value="com.tstory.joalog.member.security.user.UserAuthService"/>
+    
+  </bean>
+  
+  <security:http auto-config="true" use-expressions="true">
+    <security:csrf disabled="true"/>
+    <security:intercept-url pattern="/**" access="permitAll"/>
+    <security:form-login login-page="/springboard/member/login.do"
+      authentication-success-handler-ref="loginSuccessHandler"
+      authentication-failure-handler-ref="loginFailureHandler"
+      login-processing-url="/auth"
+      username-parameter="id"
+
+      password-parameter="pw"/>
+     <security:logout logout-url="/springboard/member/logout.do"
+      logout-success-url="/springboard/info/main.do"
+      invalidate-session="true"/>
+  </security:http>
+  
+</beans>
+

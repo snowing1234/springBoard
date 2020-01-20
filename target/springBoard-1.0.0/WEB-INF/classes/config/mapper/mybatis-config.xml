@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+
+	
+	<!--  oracle null 처리  -->
+    <settings>
+        <setting name="cacheEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+        <!--  File_Attach와 같이 "_"가 포함된 column인 경우, CamelCase로 변환된 getter setter를 사용하도록 설정하는 것. -->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        
+    </settings>
+    
+</configuration>

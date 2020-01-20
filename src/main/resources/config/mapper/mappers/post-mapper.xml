@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+
+	<!--  예시  
+	<select id="selectNow" resultType="String">
+        SELECT NOW()
+    </select> -->
+    
+    
+	<select id="select" resultType="com.tstory.joalog.post.dao.Post">
+		SELECT * FROM
+		  post
+		WHERE
+		  postId = #{postId}
+	</select>
+	
+	<insert id="insert" parameterType="com.tstory.joalog.post.dao.Post">
+		<selectKey resultType="int" keyProperty="postId" order="BEFORE">
+   	  SELECT NVL((MAX(postId)+1),0) FROM post        
+   	</selectKey>   
+		INSERT INTO post
+		  (boardId, postId, title, writer, content, ip, hit, file_cnt)
+		VALUES
+	    ( #{boardId}, #{postId}, #{title}, #{writer}, #{content}, #{ip}, 0, 0)
+	</insert>
+	
+  <select id="getList" parameterType="com.tstory.joalog.page.DefaultPage" resultType="com.tstory.joalog.post.dao.Post">
+    SELECT post.postId, post.title, post.writer, post.hit, post.file_cnt, post.date_Write, mem.nickname AS writernick
+    FROM post, (
+        SELECT id, nickname FROM member
+          UNION
+            SELECT id, nick AS nickname FROM member_kakao) mem
+            
+    WHERE post.boardId=#{boardId} AND post.writer=mem.id
+    ORDER BY post.date_write DESC
+  </select>
+  
+  <delete id="delete" parameterType="com.tstory.joalog.post.dao.Post">
+    DELETE FROM post
+    WHERE boardId=#{boardId} AND postId=#{postId}
+  </delete>
+  
+  
+  <update id="update" parameterType="com.tstory.joalog.post.dao.Post">   
+    UPDATE post
+    SET date_update = default, title=#{title}, content=#{content}
+    WHERE boardId=#{boardId} AND postId=#{postId}
+  </update>
+  
+  <update id="updatePostHit" parameterType="com.tstory.joalog.post.dao.Post">   
+    UPDATE post
+    SET hit = hit + 1
+    WHERE boardId=#{boardId} AND postId=#{postId}
+  </update>
+  
+  
+
+</mapper>

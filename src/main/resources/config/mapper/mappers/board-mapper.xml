@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<!--  예시  
+	<select id="selectNow" resultType="String">
+        SELECT NOW()
+    </select> -->
+      
+  <insert id="insert" parameterType="com.tstory.joalog.board.dao.Board">
+    <selectKey resultType="int" keyProperty="postId" order="BEFORE">
+      SELECT NVL((MAX(id)+1),0) FROM board        
+    </selectKey>   
+    INSERT INTO board
+    	  (id, file_attach, private_set, notice, reply, comments, reply_comment, name, style, list_style, etc_Option, CATEGORY1, CATEGORY2)
+    	VALUES
+          (#{id}, #{fileAttach}, #{privateSet}, #{notice}, #{reply}, #{comments}, #{replyComment}, #{name}, #{style}, #{listStyle}, #{etcOption}, '', '')
+  </insert>
+  
+  <select id="getBoardInfo" resultType="com.tstory.joalog.board.dao.Board">
+    SELECT * FROM board
+          WHERE id=#{id}
+  </select>
+  
+  <select id="getList" resultType="com.tstory.joalog.board.dao.Board">
+    SELECT * FROM board
+  </select>
+  
+  <update id="update"  parameterType="com.tstory.joalog.board.dao.Board">
+      UPDATE board SET
+        file_attach=#{fileAttach},
+        private_set=#{privateSet},
+        notice=#{notice},
+        reply=#{reply},
+        comments=#{comments},
+        reply_comment=#{replyComment},
+        name=#{name},
+        style=#{style},
+        list_style=#{listStyle},
+        etc_Option=#{etcOption}
+      WHERE id=#{id}
+  </update>
+
+  <delete id="delete">
+    DELETE FROM board
+          WHERE id=#{id}
+  </delete>
+
+</mapper>

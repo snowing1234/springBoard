@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  View 자원 이외의 설정  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!--  annotation으로 설정된  -->
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="com.tstory.joalog" />
+	
+
+	<!--  controller Mapping -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="alwaysUseFullPath" value="false"></property>
+		<property name="mappings">
+			<props>
+				<prop key="/board/*">boardController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Database -->
+	<!--  DB Manager -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+	    <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
+	    <property name="username" value="springboard" />
+	    <property name="password" value="1234" />
+	</bean>
+	
+</beans>
