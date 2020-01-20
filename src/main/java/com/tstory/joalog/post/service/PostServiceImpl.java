@@ -96,7 +96,7 @@ public class PostServiceImpl implements PostService {
 		Post post = null;
 		String loginId = "";
 		try {
-			loginId = CheckLogin(session);
+			loginId = CheckLogin(session); 
 			isManager(session);
 			
 			post = dao.get(boardId, Integer.parseInt(postId));

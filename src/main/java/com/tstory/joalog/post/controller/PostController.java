@@ -57,7 +57,7 @@ public class PostController {
 	@RequestMapping(value="/{boardId}/list", method=RequestMethod.GET)
 	public ModelAndView list (ModelAndView mv,  @PathVariable int boardId){  
 		mv.addObject("board", boardService.select(boardId));
-		return service.list(mv, boardId, 1, 5);
+		return service.list(mv, boardId, 1, 5); 
 	}
 	
 	@RequestMapping(value="/{boardId}/insert", method=RequestMethod.POST)
