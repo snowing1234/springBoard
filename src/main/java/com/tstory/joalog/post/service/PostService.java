@@ -12,7 +12,7 @@ public interface PostService {
 	public String insert(HttpServletRequest request, HttpSession session, Post dao);
 	public ModelAndView view(ModelAndView mv, HttpSession session, int boardId, String postId);
 	public Post select(String id);
-	public String delete(int boardId, int postId);
+	public String delete(HttpSession session, int boardId, int postId);
 	public ModelAndView updateGet(ModelAndView mv, HttpSession session, int boardId, int postId);
 	public String update(HttpServletRequest request, HttpSession session, int boardId, int postId);
 	

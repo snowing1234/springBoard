@@ -37,8 +37,17 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public String delete(int boardId, int postId) {
-		dao.delete(boardId, postId);
+	public String delete(HttpSession session, int boardId, int postId) {
+		try {
+			String loginId = CheckLogin(session);
+			Post post = dao.get(boardId, postId);
+			if ( ! loginId.equals(post.getWriter())) {
+				throw new Exception("NOT_HAVE_PRIVILIAGE");
+			}
+			dao.delete(boardId, postId);
+		} catch (Exception e) {
+			return e.getMessage();
+		}
 		return "SUCCESS";
 	}
 
@@ -84,14 +93,23 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public ModelAndView view(ModelAndView mv, HttpSession session, int boardId, String postId) {
+		Post post = null;
+		String loginId = "";
 		try {
-			CheckLogin(session);
+			loginId = CheckLogin(session);
 			isManager(session);
-			mv.addObject("updateAuthority","T");
+			
+			post = dao.get(boardId, Integer.parseInt(postId));
+			//작성자와 게시글 주인 일치여부 확인
+			if (loginId.equals(post.getWriter())) {
+				mv.addObject("updateAuthority","T");
+			} else{
+				mv.addObject("updateAuthority","F");
+			}
 		}catch(Exception e){
 			mv.addObject("updateAuthority","F");
 		}
-		Post post = dao.get(boardId, Integer.parseInt(postId));
+		
 		dao.updatePostHit(post);	//조회수 증가
 		mv.addObject("post", post);
 		mv.setViewName("post/view.basic");

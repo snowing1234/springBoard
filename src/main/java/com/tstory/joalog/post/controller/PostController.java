@@ -71,8 +71,8 @@ public class PostController {
 	}
 	
 	@RequestMapping(value="/{boardId}/{postId}/delete", method=RequestMethod.GET) //deletePrss
-	public @ResponseBody String deletePrss(Model model,  @PathVariable int boardId,  @PathVariable int postId) {
-		return service.delete(boardId, postId);
+	public @ResponseBody String deletePrss(Model model,   HttpSession session,  @PathVariable int boardId,  @PathVariable int postId) {
+		return service.delete(session, boardId, postId);
 	}
 	
 	
