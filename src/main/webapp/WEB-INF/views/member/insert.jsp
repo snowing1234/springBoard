@@ -10,7 +10,7 @@
 
   <div class="column">
     <div class="order-md-1">
-      <h4 class="mb-3">회원 정보</h4>
+      <h4 class="mb-3">회원 가입</h4>
       <form class="needs-validation .was-validated" id="member" novalidate>
         <div class="mb-3">
           <label for="id">아이디</label>
@@ -25,13 +25,13 @@
 	      <div class="mb-3">
 		      <label for="pw">비밀번호</label>
 		     <div class="input-group">
-            <input type="text" class="form-control" id="pw" name="pw" placeholder="아이디를 입력하세요" required>
+            <input type="password" class="form-control" id="pw" name="pw" placeholder="아이디를 입력하세요" required>
           </div>
 	  	  </div>
 	  	  <div class="mb-3">
           <label for="pw2">비밀번호 확인</label>
           <div class="input-group">
-            <input type="text" class="form-control" id="pw2" name="pw2" placeholder="아이디를 입력하세요" required>
+            <input type="password" class="form-control" id="pw2" name="pw2" placeholder="아이디를 입력하세요" required>
           </div>
         </div>
         

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+
+	<!--  예시  
+	<select id="selectNow" resultType="String">
+        SELECT NOW()
+    </select> -->
+	
+	<insert id="insertFileInfo" parameterType="com.tstory.joalog.file.dao.FileInfo">
+		INSERT INTO
+		  files
+		VALUES
+	    ( #{boardId}, #{postId}, #{groupId}, #{filenameReal}, #{filenameServer}, #{fileExtension}, #{attacher}, #{attachDate}, #{FileSize}, #{ip})
+	</insert>
+	
+	<insert id="insertGroupInfo" parameterType="String">
+    INSERT INTO
+      file_path
+    VALUES
+      ( #{groupId}, #{"/"+groupId}, 0)
+  </insert>
+  
+  <update id="increaseFilePathCount" parameterType="String">
+    UPDATE 
+      file_path
+    SET count = count + 1
+    WHERE groupId=#{groupId}
+  </update>
+  
+  <select id="selectFileInfos"  parameterType="com.tstory.joalog.file.dao.FileInfo" resultType="com.tstory.joalog.file.dao.FileInfo">
+      SELECT * FROM
+        files
+      WHERE boardId=#{boardId} AND postId=#{postId}
+  </select>
+  
+  <select id="selectFileInfo"  parameterType="com.tstory.joalog.file.dao.FileInfo" resultType="com.tstory.joalog.file.dao.FileInfo">
+      SELECT * FROM
+        files
+      WHERE boardId=#{boardId} AND postId=#{postId} AND filename_Real=#{filenameReal}
+  </select>
+  
+  <!--  파일 삭제 1 -->
+  <update id="decreaseFilePathCount" parameterType="com.tstory.joalog.file.dao.FileInfo">
+    UPDATE 
+      file_path
+    SET count = count - 1
+    WHERE groupId=#{groupId}
+  </update>
+  
+   <!--  파일 삭제 2 -->
+  <delete  id="deleteFileInfo" parameterType="com.tstory.joalog.file.dao.FileInfo">
+    DELETE FROM
+       files
+     WHERE boardId=#{boardId} AND postId=#{postId} AND filename_Real=#{filenameReal}
+  </delete>
+  
+  
+</mapper>

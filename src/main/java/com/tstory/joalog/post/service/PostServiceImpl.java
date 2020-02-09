@@ -20,14 +20,15 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public String insert(HttpServletRequest request, HttpSession session, Post vo) {
+		int postId = -1;
 		try {
 			vo.setWriter(CheckLogin(session));
 			vo.setIp(MemberUtil.getIp(request));
-			dao.insert(vo);
+			postId=dao.insert(vo);
 		} catch (Exception e) {
-			return "ERROR"+e.getMessage();
+			return e.getMessage();
 		}
-		return "SUCCESS";
+		return new Integer(postId).toString();
 	}
 
 	@Override
@@ -83,6 +84,13 @@ public class PostServiceImpl implements PostService {
 		}
 		return "SUCCESS";
 	}
+	
+	public void updateFileCount(int boardId, int postId){
+		Post post = new Post();
+		post.setBoardId(boardId);
+		post.setPostId(postId);
+	    dao.updateFileCount(post);
+	}
 
 	@Override
 	public ModelAndView list(ModelAndView mv, int boardId, int page, int listnum) {
@@ -92,27 +100,23 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public ModelAndView view(ModelAndView mv, HttpSession session, int boardId, String postId) {
+	public ModelAndView view(ModelAndView mv, HttpSession session, int boardId, int postId) {
 		Post post = null;
-		String loginId = "";
-		try {
-			loginId = CheckLogin(session); 
-			isManager(session);
-			
-			post = dao.get(boardId, Integer.parseInt(postId));
-			//작성자와 게시글 주인 일치여부 확인
-			if (loginId.equals(post.getWriter())) {
-				mv.addObject("updateAuthority","T");
-			} else{
-				mv.addObject("updateAuthority","F");
-			}
-		}catch(Exception e){
-			mv.addObject("updateAuthority","F");
-		}
 		
+		post = dao.get(boardId, postId);
 		dao.updatePostHit(post);	//조회수 증가
 		mv.addObject("post", post);
+		mv.addObject("updateAuthority","F");	
 		mv.setViewName("post/view.basic");
+		//삭제 및 수정 권한 체크
+		try {
+			String loginId = CheckLogin(session);  
+			isManager(session);
+
+			if (loginId.equals(post.getWriter())) {
+				mv.addObject("updateAuthority","T");
+			}
+		}catch(Exception e){}
 		return mv;
 	}
 	
@@ -131,6 +135,13 @@ public class PostServiceImpl implements PostService {
 		} catch(Exception e) {
 			return "ERROR_NOT_MANAGER";
 		}
+	}
+
+	public void fileDelete(int boardId, int postId) {
+		Post post=  new Post();
+		post.setBoardId(boardId);
+		post.setPostId(postId);
+		dao.decreaseFileCnt(post);
 	}
 
 }

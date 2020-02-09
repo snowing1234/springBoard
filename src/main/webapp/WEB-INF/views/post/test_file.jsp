@@ -2,15 +2,15 @@
     pageEncoding="UTF-8"%>
  <div class="container">
  
-    <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <h2>게시판</h2>
-    </div>
-  
-  
-  <div class="column">
+	  <div class="py-5 text-center">
+	    <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+	    <h2>게시판</h2>
+	  </div>
+	
+	
+	<div class="column">
     <div class="order-md-1">
-      <h4 class="mb-3">${board.name}</h4>
+      <h4 class="mb-3">게시판 이름</h4>
       <form class="needs-validation .was-validated" id="form">
 
         <div class="mb-3">
@@ -20,13 +20,13 @@
           </div>
         </div>
 
-        <div class="mb-3">
-            <label for="validationTextarea">내용</label>
-             <div class="input-group">
-               <textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
-            </div>
-         </div>
-         <hr class="mb-4">
+	      <div class="mb-3">
+			      <label for="validationTextarea">내용</label>
+			       <div class="input-group">
+			         <textarea class="form-control" id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
+			      </div>
+	       </div>
+	       <hr class="mb-4">
       </form>
       
       
@@ -39,24 +39,13 @@
          </div>
          
          <div>
-             <ul id="attchedFile" class="simpleUL">
+             <ul id="attchedFile" style="">
                  <li></li>
              </ul>
          </div>
      </div>
          
-      <button class="btn btn-primary btn-lg btn-block" type="button" onclick="insertPost(${board.id})">작성</button>
+      <button class="btn btn-primary btn-lg btn-block" type="button" onclick="insertPost()">작성</button>
     </div>
   </div>
  </div>
- 
- <style>
-  .simpleUL{
-        list-style-type: none;
-        padding-left: 0
-    }
-    
-    .simpleUL li {
-        margin:10px;
-    }
- </style>

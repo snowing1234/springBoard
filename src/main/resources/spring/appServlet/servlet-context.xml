@@ -15,6 +15,7 @@
 	<context:component-scan base-package="com.tstory.joalog.member" />
 	<context:component-scan base-package="com.tstory.joalog.post" />
 	<context:component-scan base-package="com.tstory.joalog.api" />
+	<context:component-scan base-package="com.tstory.joalog.file" />
 	
 	<mvc:annotation-driven />                                         <!-- annotation 사용설정 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />  <!--  자원 설정  -->
@@ -36,6 +37,7 @@
 	      <prop key="/board/*">boardController</prop>
 	      <prop key="/member/*">memberController</prop>
 	      <prop key="/auth/*">apiController</prop>
+	       <prop key="/file/*">fileController</prop>
 	    </props>
 	  </property>
 	</bean>

@@ -11,8 +11,7 @@
 	<select id="select" resultType="com.tstory.joalog.post.dao.Post">
 		SELECT * FROM
 		  post
-		WHERE
-		  postId = #{postId}
+		WHERE boardId=#{boardId} AND postId=#{postId}
 	</select>
 	
 	<insert id="insert" parameterType="com.tstory.joalog.post.dao.Post">
@@ -53,6 +52,21 @@
     SET hit = hit + 1
     WHERE boardId=#{boardId} AND postId=#{postId}
   </update>
+  
+  <update id="updateFileCount" parameterType="com.tstory.joalog.post.dao.Post">   
+    UPDATE post
+    SET file_cnt = file_cnt + 1
+    WHERE boardId=#{boardId} AND postId=#{postId}
+  </update>
+  
+  <update id="decreasPostFileCount" parameterType="com.tstory.joalog.post.dao.Post">
+    UPDATE 
+     post
+    SET file_cnt = file_cnt - 1
+    WHERE boardId=#{boardId} AND postId=#{postId}
+  </update>
+  
+  
   
   
 

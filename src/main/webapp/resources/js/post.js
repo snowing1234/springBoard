@@ -15,22 +15,28 @@ function valCheck(){
 }
 
 
-function insertPost(){
+function insertPost(boardId){
 	if (valCheck() == false) {
 		return false;
 	}
-	var post =  $("#form").serialize();
+	const  post =  $("#form").serialize();
 	$.ajax({
 		cache : false,
 		method:"POST",
-		url : "insert.do", // 요기에
+		url : 	pageContext+`/post/${boardId}/insert.do`,
 		data : post,
-		success:function(data){
-			if (data == "SUCCESS") {
-				alert("게시글이 저장되었습니다.");
-				location.href="list.do";
+		success:function(postId){
+			if (postId.indexOf("ERROR") == -1 ) { //성공
+				//첨부파일 여부 확인
+				if ($("#file").val() == "") {
+					alert("저장되었습니다");
+				}else {
+					if (uploadPost(boardId, postId)) {
+						location.href="list.do";
+					};
+				}
 			}
-			if (data == "ERROR_NOT_LOGIN") {
+			if (postId == "ERROR_NOT_LOGIN") {//실패
 				alert("로그인 후 다시 시도해주세요.");
 			}
 		},
@@ -38,7 +44,38 @@ function insertPost(){
 			alert("글 저장 중 문제가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
 		}
 	});
+};
+
+//첨부파일 업로드
+function uploadPost(boardId, postId){
+	var  formData= new FormData($("#fileForm")[0]);
+	var result = false;
+	$.ajax({
+		type:"POST",
+		enctype : 'multipart/form-data',
+		url : pageContext+`/post/${boardId}/${postId}/fileInsert.do`,
+		async : false,
+		data : formData,
+		processData : false,
+		contentType :  false,
+		cache : false,
+		success:function(data){
+			if (data == "SUCCESS") {
+				alert("저장되었습니다.");
+				result = true;
+			}
+			if (data == "ERROR_NOT_LOGIN") {
+				alert("로그인 후 다시 시도해주세요.");
+			}
+		},
+		error:function(request,status){
+			alert("글 저장 중 문제가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
+			return false;
+		}
+	});
+	return result;
 }
+
 
 function deletePost(boardId, postId){
 	$.ajax({
@@ -66,6 +103,9 @@ function updatePost(boardId, postId){
 		url : pageContext+`/post/${boardId}/${postId}/update.do`, // 요기에
 		data : post,
 		success:function(data){
+			if (data == "SUCCESS") {
+				uploadPost(boardId, postId);
+			}
 			boardErrorCode(data, pageContext+`/post/${boardId}/list.do`,"수정되었습니다");
 		},
 		error:function(request,status){
@@ -74,100 +114,40 @@ function updatePost(boardId, postId){
 	});
 }
 
-/* 작업필요한 함수들 reference. baord.js
-function updateBoard(){
-	if (valCheck()==false) {
-		return false;
-	}
-	var board =  $("#board").serialize();
-	$.ajax({
-		cache : false,
-		method:"POST",
-		url : pageContext+"/board/update.do", // 요기에
-		data : board,
-		success:function(data){
-			boardErrorCode(data, pageContext+"/board/list.do","게시판이 수정되었습니다");
-		},
-		error:function(request,status){
-			alert("게시판 수정 중 오류가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
-		}
-	});
-}
+/*
 
-function deleteBoard(){
-	var data = new Object();
-	data.id = $("#id").val();
-	
-	var jsonData = JSON.stringify(data);
-
-	$.ajax({
-		cache : false,
-		method:"POST",
-		contentType : 'application/json',
-		url : pageContext+"/board/delete.do", 
-		data : jsonData,
-		success:function(data){
-			boardErrorCode(data, pageContext+"/board/list.do","게시판이 삭제 되었습니다");
-		},
-		error:function(request,status){
-			alert("게시판 삭제 중 오류가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
-		}
-	});
-}
-//값 유효성 체크
-function valCheck(){
-	if (getByte($("#id").val()) > 20) {
-		alert("20글자 이내로 입력해주세요.");
-		return false;
-	}
-	if (getByte($("#name").val()) > 30) {
-		alert("30바이트 이내로 입력해주세요.");
-		return false;
-	}
-	if ($("#style option:selected").val() == "") {
-		alert("게시판 스타일을 선택해주세요.");
-		return false;
-	}
-	if ($("#listStyle option:selected").val() == "") {
-		alert("리스트 스타일을 선택해주세요.");
-		return false;
-	}
-}
-
-//체크박스 값 설정
-function boardChkBoxValSet(name, jstl){
-	 if(jstl== "T") {
-		 $("input:checkbox[name="+name+"]").prop('checked', true);
-	 }
-}
-
-//에러코드 모음
-function boardErrorCode(data, successLocation, successMessage) {
-	if (data == "SUCCESS"){
-		if (successMessage != ""){
-			alert(successMessage);
-		}
-		location.href=successLocation;
-	}
-	else if (data == "ERROR_NOT_MANAGER"){
-		alert("관리자만 사용가능합니다.");
-	}
-	else if (data == "ERROR_NOT_LOGIN") {
-		alert("로그인 후 사용바랍니다.");
-	}
-	else if (data == "ERROR_DUBPLE_ID") {
-		alert("게시판 이름이 이미 존재합니다. 다른 이름으로 변경해주세요.");
-	}
-	else if (data == "ERROR_NULL_ID") {
-		alert("게시판 이름을 설정해주세요.");
-	}
-	else if (data == "ERROR_NULL_NAME") {
-		alert("표출될 이름을 설정해주세요.");
-	}
-	else {
-		alert("저장시 문제가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
-	}
+function downloadFile(filename){
+	const encFileName = encodeURI(filename);
+	window.location =`fileDownLoad.do?FileName=${encFileName}`;
 }
 */
 
+// Ajax 처리방식 
+function downloadFile(filename){
+	const encFileName = encodeURI(filename);
+	$.ajax({
+		method:"GET",
+		url : `fileDownLoad.do`,
+		success : function(data) {
+			window.location =`fileDownLoad.do?FileName=${encFileName}`;
+		},
+		error:function(request,status){
+			alert("오류가 발생했습니다.");
+		}
+	});
+}
 
+function deleteFile(filename, fileIdx){
+	const encFileName = encodeURI(filename);
+	$.ajax({
+		method:"GET",
+		url : `fileDelete.do?FileName=${filename}`,
+		success : function(data) {	
+			alert("파일이 삭제되었습니다.");
+			$("#file_0").empty(); 
+		},
+		error:function(request,status){
+			alert("오류가 발생했습니다.");
+		}
+	});
+}

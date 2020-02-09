@@ -16,15 +16,9 @@ public class PostDAOImpl implements PostDAO{
 	private SqlSessionTemplate sqlSession;	
 
 	@Override
-	public boolean insert(Post vo) {
-		try {
-			sqlSession.insert("post.insert", vo);
-		} catch(Exception e){
-			System.out.println(vo.toString());
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+	public int insert(Post vo) {
+		sqlSession.insert("post.insert", vo);
+		return vo.getPostId();
 	}
 	@Override
 	public Post get(int boardId, int postId) {
@@ -46,5 +40,12 @@ public class PostDAOImpl implements PostDAO{
 	
 	public void updatePostHit(Post post) {
 		sqlSession.update("post.updatePostHit", post);
+	}
+	
+	public void updateFileCount(Post post) {
+		sqlSession.update("post.updateFileCount", post);
+	}
+	public void decreaseFileCnt(Post post) {
+		sqlSession.update("post.decreasPostFileCount", post);
 	}
 }

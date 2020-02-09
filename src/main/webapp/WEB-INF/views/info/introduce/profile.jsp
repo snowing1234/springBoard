@@ -32,6 +32,11 @@
           <li>javascript</li>
           <li>JQuery</li>
           <li>nodejs</li>
+          <li>
+              <a href="https://learning.intersystems.com/course/view.php?id=4&ssoPass=1">
+                  Caché (케세이, interSystems)
+              </a>
+          </li>
         </ul>
 
 
@@ -45,7 +50,7 @@
 
 	      
 	
-	     <h5><b>개발 도서 목록 </b></h5>
+	     <h5><b>정독한 개발 도서 목록 </b></h5>
 				<table class="table table-responsive-xl x">
 				   <tr>
 	           <td> <img style="width : 100px;" src="https://image.aladin.co.kr/product/2049/54/cover500/899264986x_1.jpg"></td>
@@ -58,12 +63,12 @@
 	           </td>
 	         </tr>
 				   <tr>
-				     <td> <img style="width : 100px;" src="https://image.aladin.co.kr/product/15837/93/cover500/k422533335_1.jpg"></td>
+				     <td> <img style="width : 100px;" src="https://image.aladin.co.kr/product/2030/81/cover150/8959522678_1.jpg"></td>
 				     <td>
                <ul class="list-unstyled"> 
 	               <li><b>바로바로 할 수 있는 jQuery 입문</b></li>        
-	               <li>조현영</li>  
-	               <li>길벗출판사</li>
+	               <li>유광열</li>  
+	               <li>제우미디어</li>
 	             </ul>
 	           </td>
 				   </tr>
@@ -87,6 +92,16 @@
 	             </ul>
 	           </td>
 	         </tr>
+	         <tr>
+             <td> <img style="width : 100px;" src="https://image.aladin.co.kr/product/15837/93/cover150/k422533335_1.jpg"></td>
+             <td>
+               <ul class="list-unstyled"> 
+                 <li><b>Node.js 교과서</b></li>        
+                 <li>조현영</li>  
+                 <li>길벗</li>
+               </ul>
+             </td>
+           </tr>
 				</table>
 	    </div>
     </div>
