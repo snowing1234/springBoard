@@ -132,6 +132,6 @@ function CheckNickName() {
 function kakao_getToken() {
 	
 	const app_key = "965dbed2b5cdf6d4b6ad511f46129932";
-	const redirect_uri = "http://"+window.location.host + "/springBoard/auth/kakao.do";
-	location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${app_key}&redirect_uri=${redirect_uri}&response_type=code&state=${window.location.host}`;
+	const redirect_uri = "http://happysue.coo.kr/springBoard/auth/kakao.do";
+	location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${app_key}&redirect_uri=${redirect_uri}&response_type=code&state=`;
 }

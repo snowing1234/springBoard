@@ -7,7 +7,7 @@
 
 //페이지 이동
 function movePage(link){
-	location.href = link;
+	window.open(link, '_blank'); 
 }
 
 //글자입력시 바이트 수 체크 (DB 입력시 필요)

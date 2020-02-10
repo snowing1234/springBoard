@@ -35,13 +35,13 @@ public class ApiService {
 		//토큰 획득
 		String host = request.getParameter("state"); //도메인 주소가 바뀔 것을 대비...!
 		if ( request.getParameter("code") == null ) {
-			return "/member/login.do";
+			return "member/login.basic"; 
 		}
 			
 		//토근 사용 및 인증
 		Map<String, Object> authData = authKakao(request.getParameter("code"), host);
 		if (authData != null && authData.get("access_token") == null) {
-			return "/member/login.do";
+			return "member/login.basic";
 		}
 		session.setAttribute("kakao_access_token", authData.get("access_token"));
 		
@@ -57,7 +57,9 @@ public class ApiService {
 		user.setId(tokenResult.get("id").toString());
 		user.setAccessToken(authData.get("access_token").toString()); //accessToken
 		user.setNick(profile.get("nickname").toString());
-		user.setThumbnail(profile.get("thumbnail_image_url").toString());
+		if (profile.get("thumbnail_image_url") != null) {
+			user.setThumbnail(profile.get("thumbnail_image_url").toString());
+		}
 		
 		if ( dao.getUser(tokenResult.get("id").toString()) != null ) {
 			dao.updateUser(user);
