@@ -9,9 +9,19 @@
     
     
 	<select id="select" resultType="com.tstory.joalog.post.dao.Post">
+	SELECT post.boardId, post.postId, post.title, post.writer, post.content, post.hit, post.ip, post.file_cnt, post.date_Write, post.date_update, mem.nickname AS writernick
+	   FROM post LEFT JOIN 
+        ( SELECT id, nickname FROM member
+          UNION
+            SELECT id, nick AS nickname FROM member_kakao ) mem
+    ON post.writer = mem.id
+  WHERE boardId=#{boardId} AND postId=#{postId}
+  
+		<!--  닉네임 표출 될 수 있도록 수정
 		SELECT * FROM
 		  post
 		WHERE boardId=#{boardId} AND postId=#{postId}
+		 -->
 	</select>
 	
 	<insert id="insert" parameterType="com.tstory.joalog.post.dao.Post">
@@ -25,6 +35,14 @@
 	</insert>
 	
   <select id="getList" parameterType="com.tstory.joalog.page.DefaultPage" resultType="com.tstory.joalog.post.dao.Post">
+   SELECT post.postId, post.title, post.writer, post.hit, post.file_cnt, post.date_Write, mem.nickname AS writernick
+    FROM post LEFT JOIN (
+        SELECT id, nickname FROM member
+          UNION
+            SELECT id, nick AS nickname FROM member_kakao) mem
+    ON post.writer = mem.id
+    ORDER BY post.postId DESC
+   <!-- 구문오류 수정
     SELECT post.postId, post.title, post.writer, post.hit, post.file_cnt, post.date_Write, mem.nickname AS writernick
     FROM post, (
         SELECT id, nickname FROM member
@@ -32,7 +50,7 @@
             SELECT id, nick AS nickname FROM member_kakao) mem
             
     WHERE post.boardId=#{boardId} AND post.writer=mem.id
-    ORDER BY post.date_write DESC
+    ORDER BY post.date_write DESC-->
   </select>
   
   <delete id="delete" parameterType="com.tstory.joalog.post.dao.Post">

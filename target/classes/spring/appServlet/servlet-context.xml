@@ -36,7 +36,7 @@
 	      <prop key="/post/*">postController</prop>
 	      <prop key="/board/*">boardController</prop>
 	      <prop key="/member/*">memberController</prop>
-	      <prop key="/auth/*">apiController</prop>
+	      <prop key="/api/*">apiController</prop>
 	       <prop key="/file/*">fileController</prop>
 	    </props>
 	  </property>

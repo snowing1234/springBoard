@@ -7,6 +7,10 @@
 
 //페이지 이동
 function movePage(link){
+	location.href = link; 
+}
+
+function openPage(link){
 	window.open(link, '_blank'); 
 }
 

@@ -71,6 +71,10 @@ function insertMember(){
 		alert("비밀번호를 확인해주세요.");
 		return false;
 	}
+	if ($("#agree").prop("checked") == false){
+		alert("주의사항에 동의해주세요.");
+		return false;
+	}
 	var data  =  $("#member").serialize();
 	console.log(data);
 	$.ajax({
@@ -130,8 +134,7 @@ function CheckNickName() {
 }
 
 function kakao_getToken() {
-	
 	const app_key = "965dbed2b5cdf6d4b6ad511f46129932";
-	const redirect_uri = "http://happysue.coo.kr/springBoard/auth/kakao.do";
-	location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${app_key}&redirect_uri=${redirect_uri}&response_type=code&state=`;
+	const redirect_uri = "http://110.35.176.5:9090/springBoard/api/kakao.do"; 
+	location.href=`https://kauth.kakao.com/oauth/authorize?client_id=${app_key}&redirect_uri=${redirect_uri}&response_type=code&state=110.35.176.5:9090`;
 }

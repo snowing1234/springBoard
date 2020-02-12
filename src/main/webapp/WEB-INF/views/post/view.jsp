@@ -13,7 +13,7 @@
 		   <tr><th>
 		     <p class="title">${post.title}</p>
 		     <ul class="info">
-			     <li>${post.writer} </li>
+			     <li>${post.writernick} </li>
 			     <li>&nbsp|&nbsp</li>
 			     <li> ${post.dateWrite}</li>
 		     </ul> 

@@ -61,9 +61,9 @@
 	  <label for="inputPw">비밀번호</label>
 	  <input type="password" id="pw" name="pw"class="form-control" placeholder="비밀번호" required>
 	     <div class="checkbox">
-      <label>
+      <!-- <label>
         <input type="checkbox" value="remember-me"> 자동 로그인
-      </label>
+      </label> -->
     </div>
     
 	  <button class="btn btn-lg btn-primary btn-block login" type="button" onclick="login()">로그인</button>

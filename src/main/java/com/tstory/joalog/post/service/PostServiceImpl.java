@@ -72,7 +72,16 @@ public class PostServiceImpl implements PostService {
 	public String update(HttpServletRequest request, HttpSession session, int boardId, int postId){
 		try {
 			Post post = dao.get(boardId, postId);
-			if (post.getWriter().equals(CheckLogin(session))) {
+			String writer = CheckLogin(session);
+			boolean updateAuth = false;
+			
+			if (writer.equals(post.getWriter()) ) {
+				updateAuth = true;
+			} else if ( isManager(session).equals("SUCCESS")) {
+				updateAuth = true;
+			}
+			
+			if (updateAuth) {
 				post.setTitle(request.getParameter("title"));
 				post.setContent(request.getParameter("content"));
 				dao.update(post);
@@ -111,9 +120,11 @@ public class PostServiceImpl implements PostService {
 		//삭제 및 수정 권한 체크
 		try {
 			String loginId = CheckLogin(session);  
-			isManager(session);
+			
 
 			if (loginId.equals(post.getWriter())) {
+				mv.addObject("updateAuthority","T");
+			}else if (isManager(session).equals("SUCCESS")){
 				mv.addObject("updateAuthority","T");
 			}
 		}catch(Exception e){}
@@ -125,7 +136,7 @@ public class PostServiceImpl implements PostService {
 		if ((loginID) == null || (loginID.toString().equals(""))) {
 			throw new Exception("ERROR_NOT_LOGIN");
 		}
-		return (String) loginID;
+		return ((String)loginID).split("KAKAO")[0];
 	}
 	
 	public String isManager(HttpSession session){

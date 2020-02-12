@@ -2,6 +2,7 @@ package com.tstory.joalog.api.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.util.URLEncoder;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -27,8 +29,10 @@ public class ApiService {
 	@Inject
 	public KakaoApiDAO dao;
 	
-	private final String TOKEN_URL = "https://kauth.kakao.com/oauth/token";
-	private final String TOKEN_VALIDITY_CHECK = "https://kapi.kakao.com/v2/user/me";
+	private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
+	private final String KAKAO_TOKEN_VALIDITY_CHECK = "https://kapi.kakao.com/v2/user/me";
+	private final String TISTORY_TOKEN_URL = "https://www.tistory.com/oauth/access_token?";
+	private final String TISTORY_POST_LIST_URL = "https://www.tistory.com/oauth/access_token";
 	
 	
 	public String userAgree(HttpServletRequest request, HttpSession session){
@@ -76,12 +80,12 @@ public class ApiService {
 	public Map<String, Object> authKakao(String code, String host) {
 
 		//POST방식 연결 설정
-		HttpPost httpPost = new HttpPost(TOKEN_URL);
+		HttpPost httpPost = new HttpPost(KAKAO_TOKEN_URL);
 		httpPost.addHeader("Content-type", " application/x-www-form-urlencoded;charset=utf-8");
 		
 		String data = "grant_type=authorization_code&"
 				+ "client_id=965dbed2b5cdf6d4b6ad511f46129932&"
-				+ "redirect_uri=http://"+host+"/springBoard/auth/kakao.do&"
+				+ "redirect_uri=http://"+host+"/springBoard/api/kakao.do&"
 				+ "code="+code;
 		
 		try {
@@ -111,7 +115,7 @@ public class ApiService {
 	public Map<String, Object> tokenValidityCheck(String access_token) {
 
 		//POST방식 연결 설정
-		HttpGet httpGet = new HttpGet(TOKEN_VALIDITY_CHECK);
+		HttpGet httpGet = new HttpGet(KAKAO_TOKEN_VALIDITY_CHECK);
 		httpGet.addHeader("Authorization", "Bearer "+access_token);
 		httpGet.addHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
@@ -136,4 +140,93 @@ public class ApiService {
 		}
 		return null;
 	}
+
+/*
+	public String userAgreeTistory(HttpServletRequest request, HttpSession session) {
+		//토큰 획득
+		String host = request.getParameter("state"); //도메인 주소가 바뀔 것을 대비...!
+		if ( request.getParameter("code") == null ) {	//코드값이 없으면 에러 발생한 것.
+			return "member/login.basic"; 
+		}
+		//토근 사용 및 인증
+		String authData = authTistory(request.getParameter("code"), host);
+		if (authData.startsWith("error")) {
+			return authData;
+		}
+		
+		/*
+		//토큰 재인등 및 사용자 정보 획득
+		Map<String, Object> tokenResult = getListTistory(authData);
+		if (tokenResult != null && tokenResult.get("code") != null) {
+			session.setAttribute("tistory_auth_code", authData);
+		}
+		System.out.println("5" +  authData.toString());
+*//*
+		return "SUCCESS";
+	}
+	
+	//로그인
+	private  String authTistory(String code, String host) {
+
+		//POST방식 연결 설정
+		String data = "client_id=75b39948020ccbb447a6246fe5de10be&"
+				+ "client_secret=75b39948020ccbb447a6246fe5de10bea60ff17ad682c636acb920947159a8181f3da5ab&"
+				+ "redirect_uri=http://"+host+"/springBoard/api/tistory/list.do&"
+				+ "code="+code+"&"
+				+ "grant_type=authorization_code";
+		
+		HttpGet httpGet = new HttpGet(TISTORY_TOKEN_URL+data);
+		httpGet.addHeader("Content-type", "text/plain;charset=utf-8");
+		
+		try {
+			//실행 및 응답
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
+			
+			//응답데이터 받아오기
+			BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
+			StringBuffer response = new StringBuffer();
+			String inputLine;
+			while((inputLine = reader.readLine()) != null) {
+				response.append(inputLine);
+			}
+			reader.close();
+			httpClient.close();
+			System.out.println(response.toString());
+			return response.toString(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}		
+	
+	public Map<String, Object> getListTistory(String access_token) {
+
+		//POST방식 연결 설정
+		HttpGet httpGet = new HttpGet(TISTORY_POST_LIST_URL);
+		httpGet.addHeader("Authorization", "Bearer "+access_token);
+		httpGet.addHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		try {
+			//실행 및 응답
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
+			System.out.println("\u001B[46m"+ " excuted httpClient " +"\u001B[0m");
+			//응답데이터 받아오기
+			BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
+			StringBuffer response = new StringBuffer();
+			String inputLine;
+			while((inputLine = reader.readLine()) != null) {
+				response.append(inputLine);
+			}
+			reader.close();
+			httpClient.close();
+			
+			return JsonReader.jsonToMaps(response.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	*/
 }

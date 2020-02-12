@@ -4,14 +4,7 @@
 
 <footer class="container">
   <hr class="mb-8"/>
-  <div class="row">
-		  <div class="col-3">
-		    <img src="${pageContext.request.contextPath}/resources/image/myboard_logo.gif">
-		  </div>
-		  <div class="col-9">
-		    <br/>
-			  <a><b>ABOUT SPRINGBOARD</b></a> | <a>개인정보보호</a> | <a>광고문의</a> | <a>CONTACT</a>
-			  <p>&copy; RyuSue 2019-present</p>
-		  </div>
+  <div class="row" style="padding : 1em 0em 1em 0em;">
+		    <span style="margin : 0em 1em 0em 1em;">MY PORTFOLIO </span> &copy; ryusue 2019-present
   </div>
 </footer>

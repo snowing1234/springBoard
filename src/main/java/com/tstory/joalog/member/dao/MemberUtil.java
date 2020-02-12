@@ -28,5 +28,6 @@ public class MemberUtil {
     public static void setLogout(HttpSession session){
 		session.setAttribute("MYBOARD_MEMBER", "");
 		session.setAttribute("MYBOARD_MANAGER", "");
+		session.setAttribute("MYBOARD_NICK", "");
     }
 }

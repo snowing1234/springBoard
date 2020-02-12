@@ -5,7 +5,6 @@
  <div class="container">
  
   <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h2>게시판</h2>
     <p class="lead">안녕하세요. 류지수의 게시판입니다.</p>
   </div>
