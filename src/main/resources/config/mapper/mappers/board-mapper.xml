@@ -7,8 +7,8 @@
         SELECT NOW()
     </select> -->
       
-  <insert id="insert" parameterType="com.tstory.joalog.board.dao.Board">
-    <selectKey resultType="int" keyProperty="postId" order="BEFORE">
+  <insert id="insert" parameterType="com.tstory.joalog.admin.board.dao.Board">
+    <selectKey resultType="int" keyProperty="id" order="BEFORE">
       SELECT NVL((MAX(id)+1),0) FROM board        
     </selectKey>   
     INSERT INTO board
@@ -17,16 +17,16 @@
           (#{id}, #{fileAttach}, #{privateSet}, #{notice}, #{reply}, #{comments}, #{replyComment}, #{name}, #{style}, #{listStyle}, #{etcOption}, '', '')
   </insert>
   
-  <select id="getBoardInfo" resultType="com.tstory.joalog.board.dao.Board">
+  <select id="getBoardInfo" resultType="com.tstory.joalog.admin.board.dao.Board">
     SELECT * FROM board
           WHERE id=#{id}
   </select>
   
-  <select id="getList" resultType="com.tstory.joalog.board.dao.Board">
+  <select id="getList" resultType="com.tstory.joalog.admin.board.dao.Board">
     SELECT * FROM board
   </select>
   
-  <update id="update"  parameterType="com.tstory.joalog.board.dao.Board">
+  <update id="update"  parameterType="com.tstory.joalog.admin.board.dao.Board">
       UPDATE board SET
         file_attach=#{fileAttach},
         private_set=#{privateSet},

@@ -6,7 +6,7 @@
 
 
 function insertBoard(){
-	if (valCheck()==false) {
+	if (boardValCheck()==false) {
 		return false;
 	}
 	var board =  $("#board").serialize();
@@ -15,17 +15,20 @@ function insertBoard(){
 		method:"POST",
 		url : pageContext+"/board/insert.do", // 요기에
 		data : board,
+		dataType: "text",
 		success:function(data){
-			boardErrorCode(data, pageContext+"/board/list.do","게시판이 생성되었습니다");
+			alert("게시판이 생성되었습니다.");
+			location.href = pageContext+"/board/list.do";
 		},
 		error:function(request,status){
 			alert("게시판 생성중 오류가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
+			alert("request : [" + request + "] status : [" + status + "]")
 		}
 	});
 }
 
 function updateBoard(){
-	if (valCheck()==false) {
+	if (boardValCheck()==false) {
 		return false;
 	}
 	var board =  $("#board").serialize();
@@ -34,8 +37,10 @@ function updateBoard(){
 		method:"POST",
 		url : pageContext+"/board/update.do", // 요기에
 		data : board,
+		dataType: "text",
 		success:function(data){
-			boardErrorCode(data, pageContext+"/board/list.do","게시판이 수정되었습니다");
+			alert("게시판이 수정되었습니다");
+			location.href=pageContext+"/board/list.do";
 		},
 		error:function(request,status){
 			alert("게시판 수정 중 오류가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
@@ -55,16 +60,25 @@ function deleteBoard(){
 		contentType : 'application/json',
 		url : pageContext+"/board/delete.do", 
 		data : jsonData,
+		dataType: "text",
 		success:function(data){
-			boardErrorCode(data, pageContext+"/board/list.do","게시판이 삭제 되었습니다");
+			alert("게시판이 삭제 되었습니다.");
+			location.href=pageContext+"/board/list.do";
 		},
 		error:function(request,status){
 			alert("게시판 삭제 중 오류가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
 		}
 	});
 }
+
+
+
+/*******************부가적인 메소드**************************/
+
+
+
 //값 유효성 체크
-function valCheck(){
+function boardValCheck(){
 	if (getByte($("#name").val()) > 30) {
 		alert("30바이트 이내로 입력해주세요.");
 		return false;
@@ -81,9 +95,9 @@ function valCheck(){
 
 //체크박스 값 설정
 function boardChkBoxValSet(name, jstl){
-	 if(jstl== "T") {
-		 $("input:checkbox[name="+name+"]").prop('checked', true);
-	 }
+	if(jstl== "T") {
+		$("input:checkbox[name="+name+"]").prop('checked', true);
+	}
 }
 
 //에러코드 모음

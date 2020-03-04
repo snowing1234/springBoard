@@ -1,4 +1,4 @@
-package com.tstory.joalog.board.dao;
+package com.tstory.joalog.admin.board.dao;
 
 
 public class Board {

@@ -11,7 +11,7 @@
 	
 	<!-- spring 기본 설정 -->
 	<context:annotation-config/>                                      <!-- annotation 사용설정 -->
-	<context:component-scan base-package="com.tstory.joalog.board" />       <!-- component scan 범위 -->
+	<context:component-scan base-package="com.tstory.joalog.admin.board" />       <!-- component scan 범위 -->
 	<context:component-scan base-package="com.tstory.joalog.member" />
 	<context:component-scan base-package="com.tstory.joalog.post" />
 	<context:component-scan base-package="com.tstory.joalog.api" />
@@ -36,7 +36,6 @@
 	      <prop key="/post/*">postController</prop>
 	      <prop key="/board/*">boardController</prop>
 	      <prop key="/member/*">memberController</prop>
-	      <prop key="/api/*">apiController</prop>
 	       <prop key="/file/*">fileController</prop>
 	    </props>
 	  </property>

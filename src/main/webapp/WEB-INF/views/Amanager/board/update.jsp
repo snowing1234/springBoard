@@ -4,29 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<%@ page import="com.tstory.joalog.board.dao.Board" %>
+<%@ page import="com.tstory.joalog.admin.board.dao.Board" %>
 
-<!--  페이지에서 사용할 정보 셋팅 -->
-<% Board board = (Board) request.getAttribute("board"); %>
-<script>
-//Value Setting
- $(function(){
-	 $("select[name=style]").val("${board.style}").prop("selected", true);
-	 $("select[name=listStyle]").val("${board.listStyle}").prop("selected", true);
-	 boardChkBoxValSet("fileAttach", "${board.fileAttach}");
-	 boardChkBoxValSet("privateSet", "${board.privateSet}");
-	 boardChkBoxValSet("notice", "${board.notice}");
-	 boardChkBoxValSet("reply", "${board.reply}");
-	 boardChkBoxValSet("comments", "${board.comments}");
-	 boardChkBoxValSet("replyComment", "${board.replyComment}");
- });
-	 
- 
-</script>
-  <style>
 
-  </style> 
-    
  <div class="container">
  
   <div class="py-5 text-center">
@@ -87,3 +67,24 @@
     </form>
     </div>
  </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+<script>
+//Value Setting
+ $(function(){
+	 $("select[name=style]").val("${board.style}").prop("selected", true);
+	 $("select[name=listStyle]").val("${board.listStyle}").prop("selected", true);
+	 boardChkBoxValSet("fileAttach", "${board.fileAttach}");
+	 boardChkBoxValSet("privateSet", "${board.privateSet}");
+	 boardChkBoxValSet("notice", "${board.notice}");
+	 boardChkBoxValSet("reply", "${board.reply}");
+	 boardChkBoxValSet("comments", "${board.comments}");
+	 boardChkBoxValSet("replyComment", "${board.replyComment}");
+ });
+</script>

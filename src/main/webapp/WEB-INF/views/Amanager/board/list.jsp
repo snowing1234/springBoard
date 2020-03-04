@@ -1,28 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!--  jstl useing set -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<%@ page import="com.tstory.joalog.board.dao.Board" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ page import="com.tstory.joalog.admin.board.dao.Board" %>
 <%@ page import="java.util.List" %>
 
 <script type="text/javascript"  src="<c:url value="/resources/js/manager.js"/>"></script>
-
-<!--  페이지에서 사용할 정보 셋팅 -->
-<% List<Board> list = (List<Board>) request.getAttribute("list"); %>
-
-
-
 
     <br />
     <br />
     <br />
     <div class="container">
     
+    
+      <!-- 티스토리 --><!-- 개발중 
       <div class="row">
            <a class="btn btn-outline-primary" href="javascript:getTistoryPostList()">티스토리 게시글 업데이트</a>
-      </div>
+      </div> -->
+      
       <h3>관리자 게시판 설정</h3>
       <table class="table table-responsive-xl table-hover x">
 	      <thead class="thead-light">
@@ -74,4 +70,6 @@
 	      <% } %>
 	    </div>
     </div>
+
+
 

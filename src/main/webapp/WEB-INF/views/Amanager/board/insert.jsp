@@ -3,14 +3,14 @@
     
 
  <div class="container">
- 
+
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h2>게시판</h2>
     <p class="lead">원하시는 형태에 맞는 게시판을 설정해주세요.</p>
   </div>
   <div class="container" >
-    <form class="needs-validation .was-validated" method="post" action="javascript:insertBoard()" name="form" id="board" novalidate>
+    <form class="needs-validation .was-validated" name="board" id="board" novalidate>
 	    
 	    <h4 class="mb-3">기본 설정</h4>
       
@@ -58,10 +58,14 @@
 	      <label class="py-2"><input type="checkbox" name="replyComment"> 리댓글</label><br/>
 	    </div>
 	    
-      <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>    
+      <button class="btn btn-primary btn-lg btn-block" onclick="insertBoard()">작성</button>    
     </form>
     </div>
  </div>
+
+
+
+
 
 <script type="text/javascript">
  
