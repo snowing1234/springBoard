@@ -80,7 +80,7 @@ public class BoardController {
 	
 	//게시판 정보 수정
 	@RequestMapping(value="/update", method=RequestMethod.POST) //updatePrss
-	public ResponseEntity<?>updatePrss(HttpServletRequest request, HttpSession session, Board vo){
+	public @ResponseBody ResponseEntity<?>updatePrss(HttpServletRequest request, HttpSession session, Board vo){
 		ResponseEntity<?> rspEntity = null;
 		
 		//매니저 체크
@@ -93,7 +93,7 @@ public class BoardController {
 	
 	//게시판 삭제
 	@RequestMapping(value="/delete", method=RequestMethod.POST) //deletePrss
-	public ResponseEntity<?> deletePrss(HttpServletRequest request, HttpSession session, @RequestBody Map<String, Object> params) {
+	public @ResponseBody ResponseEntity<?> deletePrss(HttpServletRequest request, HttpSession session, @RequestBody Map<String, Object> params) {
 		ResponseEntity<?> rspEntity = null;
 		
 		//매니저 체크

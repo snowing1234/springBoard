@@ -22,7 +22,6 @@ function insertBoard(){
 		},
 		error:function(request,status){
 			alert("게시판 생성중 오류가 발생하였습니다. 잠시후 재시도 부탁드립니다.");
-			alert("request : [" + request + "] status : [" + status + "]")
 		}
 	});
 }

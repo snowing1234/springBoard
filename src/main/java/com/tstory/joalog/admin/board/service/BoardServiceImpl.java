@@ -48,19 +48,16 @@ public class BoardServiceImpl implements BoardService {
 		boardValidationCheck(board);
 		dao.update(board);
 		
-		return new ResponseEntity<>("", HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 	
 	
 	@Override
 	public ResponseEntity<?> delete (HttpServletRequest request, HttpSession session, Map<String, Object> json) {
 		
-		ResponseEntity<?> rspEntity = null;
-		if ((rspEntity = Admin.checkAuth(session)) != null) {return rspEntity;}
-		
 		dao.delete(Integer.parseInt(json.get("id").toString()));
 		
-		return rspEntity;
+		return new ResponseEntity<>("OK", HttpStatus.OK);  
 	}
 
 
